@@ -90,9 +90,10 @@ export const deleteBlog = async (req, res, nxt) => {
     console.log(id)
     let blog;
     try {
-        blog = await Blog.findOneAndRemove(id).populate('user')
+        blog = await Blog.findByIdAndRemove(id).populate('user')
         // console.log(blog)
         await blog.user.blogs.pull(blog.id)
+        console.log(blog.id)
         // console.log(blog.user.blogs.pull(blog))
         await blog.user.save()
     } catch (error) {
